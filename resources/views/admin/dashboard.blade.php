@@ -9,5 +9,5 @@
 @endsection
 
 @section('content')
-    <p>This is my user content.</p>
+    <p>This is my admin content.</p>
 @endsection
