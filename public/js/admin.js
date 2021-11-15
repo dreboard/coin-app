@@ -6,6 +6,9 @@
 //
 // Scripts
 //
+$(document).ready(function() {
+    $('.datatable').DataTable();
+} );
 
 window.addEventListener('DOMContentLoaded', event => {
 

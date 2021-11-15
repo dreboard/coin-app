@@ -31,6 +31,12 @@ Route::middleware(['auth'])->group(function () {
         ->name('admin.')
         ->group(function () {
             Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+            Route::get('/view_user/{user_id}', [AdminController::class, 'viewUser'])->name('view_user')->where('user_id', '[0-9]+');
+            Route::get('/view_users', [AdminController::class, 'viewAllUsers'])->name('view_users');
+            Route::post('/find_user', [AdminController::class, 'findUser'])->name('find_user');
+            Route::get('/delete_user/{user_id}', [AdminController::class, 'deleteUser'])->name('delete_user');
+            Route::get('/clone_user/{user_id}', [AdminController::class, 'cloneUser'])->name('clone_user');
+            Route::impersonate();
     });
 
     Route::get('/dashboard', [DashController::class, 'index'])->name('dashboard');

@@ -11,26 +11,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ config('ga.property') }}"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', '{{ config('ga.property') }}');
-    </script>
+    @include('layouts.ga')
 
 </head>
 <body class="sb-nav-fixed">
 
-@include('layouts.admin-top-nav')
+@include('layouts.user.top-nav')
 <div id="layoutSidenav">
-    @include('layouts.admin-side-nav')
+    @include('layouts.user.side-nav')
     <div id="layoutSidenav_content">
         <main>
-            @error('title')
-            <div class="alert alert-danger">{{ $message }}</div>
-            @enderror
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="container-fluid px-4">
                 <h1 class="mt-4">Dashboard</h1>
                 <ol class="breadcrumb mb-4">
@@ -60,9 +59,9 @@
 
             </div>
         </main>
-        @include('layouts.admin-footer')
+        @include('layouts.user.footer')
     </div>
 </div>
-@include('layouts.admin-scripts')
+@include('layouts.scripts')
 </body>
 </html>
