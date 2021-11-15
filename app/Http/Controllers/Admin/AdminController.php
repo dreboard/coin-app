@@ -35,8 +35,6 @@ class AdminController extends Controller
     public function viewAllUsers()
     {
         $users = User::all('id', 'name', 'created_at');
-        //$user = User::where('id', '=', $user_id)->first();
-        //dd($user->name);
         return view('admin.user-all', compact('users'));
 
     }
@@ -44,8 +42,6 @@ class AdminController extends Controller
     public function viewUser(int $user_id)
     {
         $user = User::find($user_id);
-        //$user = User::where('id', '=', $user_id)->first();
-        //dd($user->name);
         return view('admin.user-view', compact('user'));
 
     }
@@ -61,6 +57,6 @@ class AdminController extends Controller
     {
         $user = User::find($user_id);
         Auth::user()->impersonate($user);
-        return view('admin.dashboard');
+        return redirect()->route('admin.dashboard')->withInput()->withErrors(['User cloned']);
     }
 }

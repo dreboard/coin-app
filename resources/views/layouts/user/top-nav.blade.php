@@ -18,7 +18,7 @@
                 @if (auth()->user()->is_admin)
                     <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Admin Area</a></li>
                 @endif
-                <li><a class="dropdown-item" href="{{ route('dashboard') }}">Settings</a></li>
+                <li><a class="dropdown-item" href="{{ route('user_profile') }}">Profile</a></li>
                 <li><a class="dropdown-item" href="{{ route('dashboard') }}">Activity Log</a></li>
                 <li><hr class="dropdown-divider" /></li>
                 <li><a class="dropdown-item" href="#!" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>

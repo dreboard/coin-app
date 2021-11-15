@@ -12,4 +12,10 @@ class DashController extends Controller
     {
         return view('users.dashboard');
     }
+
+    public function viewProfile()
+    {
+        return view('users.settings.profile');
+    }
+
 }

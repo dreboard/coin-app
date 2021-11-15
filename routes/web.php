@@ -24,7 +24,7 @@ Route::get('/', function () {
 |--------------------------------------------------------------------------
 |
 */
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('admin')
         ->middleware(['is_admin'])
@@ -40,6 +40,8 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::get('/dashboard', [DashController::class, 'index'])->name('dashboard');
+    Route::get('/user_profile', [DashController::class, 'viewProfile'])->name('user_profile');
+
 });
 
 

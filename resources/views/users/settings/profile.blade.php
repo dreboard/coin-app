@@ -1,4 +1,4 @@
-@extends('layouts.admin.main')
+@extends('layouts.user.main')
 
 @section('title', 'Page Title')
 
@@ -9,11 +9,8 @@
 @endsection
 
 @section('content')
-    <h3 class="mt-4">Admin Dashboard</h3>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a> </li>
-        <li class="breadcrumb-item active"><a href="{{ route('admin.view_users') }}">Users</a></li>
-    </ol>
+    <p>This is my user content.</p>
+
 
     <div class="container">
         <div class="main-body">
@@ -25,15 +22,10 @@
                             <div class="d-flex flex-column align-items-center text-center">
                                 <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
                                 <div class="mt-3">
-                                    <h4>{{ $user->name }}</h4>
+                                    <h4>{{ auth()->user()->name }}</h4>
                                     <p class="text-secondary mb-1">Full Stack Developer</p>
                                     <button class="btn btn-outline-primary">Message</button>
-
-                                        <a class="btn btn-warning" href="{{ route('admin.clone_user', $user->id) }}" role="button">Clone</a>
-                                    @canBeImpersonated($user)
-                                    @endCanBeImpersonated
-
-                                    <button id="delete_user" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Delete</button>
+                                    <button id="delete_user" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Delete Account</button>
                                 </div>
                             </div>
                         </div>
@@ -43,15 +35,15 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteUserModalLabel">Delete {{ $user->name }}</h5>
+                                    <h5 class="modal-title" id="deleteUserModalLabel">Delete {{ auth()->user()->name }}</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    You are about to delete {{ $user->name }}, and all content.
+                                    You are about to delete {{ auth()->user()->name }}, and all content.
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <a class="btn btn-danger" href="{{ route('admin.delete_user', ['user_id' => $user->id])  }}" role="button">YES</a>
+                                    <a class="btn btn-danger" href="{{ route('admin.delete_user', ['user_id' => auth()->user()->id])  }}" role="button">YES</a>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +82,7 @@
                                     <h6 class="mb-0">Full Name</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{ $user->name }}
+                                    {{ auth()->user()->name }}
                                 </div>
                             </div>
                             <hr>
@@ -99,7 +91,7 @@
                                     <h6 class="mb-0">Email</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{ $user->email }}
+                                    {{ auth()->user()->email }}
                                 </div>
                             </div>
                             <hr>
@@ -202,4 +194,6 @@
 
         </div>
     </div>
+
+
 @endsection
