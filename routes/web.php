@@ -36,11 +36,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/find_user', [AdminController::class, 'findUser'])->name('find_user');
             Route::get('/delete_user/{user_id}', [AdminController::class, 'deleteUser'])->name('delete_user');
             Route::get('/clone_user/{user_id}', [AdminController::class, 'cloneUser'])->name('clone_user');
+            Route::get('/suspended_user/{user_id}', [AdminController::class, 'suspendedUser'])->name('suspended_user');
             Route::impersonate();
     });
 
-    Route::get('/dashboard', [DashController::class, 'index'])->name('dashboard');
-    Route::get('/user_profile', [DashController::class, 'viewProfile'])->name('user_profile');
+    Route::prefix('user')
+        ->name('user.')
+        ->group(function () {
+            Route::get('/dashboard', [DashController::class, 'index'])->name('dashboard');
+            Route::get('/user_profile', [DashController::class, 'viewProfile'])->name('user_profile');
+        });
+
 
 });
 

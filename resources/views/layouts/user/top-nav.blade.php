@@ -1,6 +1,6 @@
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
-    <a class="navbar-brand ps-3" href="{{ route('dashboard') }}">{{ config('app.name', 'Coin App') }}</a>
+    <a class="navbar-brand ps-3" href="{{ route('user.dashboard') }}">{{ config('app.name', 'Coin App') }}</a>
     <!-- Sidebar Toggle-->
     <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
     <!-- Navbar Search-->
@@ -18,8 +18,8 @@
                 @if (auth()->user()->is_admin)
                     <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Admin Area</a></li>
                 @endif
-                <li><a class="dropdown-item" href="{{ route('user_profile') }}">Profile</a></li>
-                <li><a class="dropdown-item" href="{{ route('dashboard') }}">Activity Log</a></li>
+                <li><a class="dropdown-item" href="{{ route('user.user_profile') }}">Profile</a></li>
+                <li><a class="dropdown-item" href="{{ route('user.dashboard') }}">Activity Log</a></li>
                 <li><hr class="dropdown-divider" /></li>
                 <li><a class="dropdown-item" href="#!" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
             </ul>

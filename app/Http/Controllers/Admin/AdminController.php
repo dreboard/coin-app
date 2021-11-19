@@ -3,12 +3,25 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Interfaces\Users\InterfaceUserRepository;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+
+
+    /**
+     * @var InterfaceUserRepository
+     */
+    private $user;
+
+    public function __construct(InterfaceUserRepository $user)
+    {
+        $this->user = $user;
+    }
+
     public function index()
     {
         return view('admin.dashboard');
@@ -59,4 +72,13 @@ class AdminController extends Controller
         Auth::user()->impersonate($user);
         return redirect()->route('admin.dashboard')->withInput()->withErrors(['User cloned']);
     }
+
+
+    public function suspendedUser(int $user_id, string $status)
+    {
+        $user = User::find($user_id);
+        Auth::user()->impersonate($user);
+        return redirect()->route('admin.dashboard')->withInput()->withErrors(['User cloned']);
+    }
+
 }

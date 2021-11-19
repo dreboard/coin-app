@@ -53,7 +53,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function canBeImpersonated()
     {
-        // For example
         return $this->can_be_impersonated == 1;
     }
 }

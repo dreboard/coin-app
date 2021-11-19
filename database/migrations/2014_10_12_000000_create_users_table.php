@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('is_admin')->default(0);
+            $table->string('account_status')->default('active'); // 'active','suspended'
             $table->rememberToken();
             $table->timestamps();
         });
@@ -31,13 +32,17 @@ class CreateUsersTable extends Migration
             'name' => 'dreboard',
             'email' => 'dre.board@gmail.com',
             'password' => Hash::make('password'),
-            'is_admin' => 1
+            'email_verified_at' => now(),
+            'is_admin' => 1,
+            'created_at' => '2021-11-01 02:17:51.000000'
         ]);
         DB::table('users')->insert([
             'name' => 'defaultUser',
             'email' => 'defaultUser@gmail.com',
             'password' => Hash::make('password'),
-            'is_admin' => 0
+            'email_verified_at' => now(),
+            'is_admin' => 0,
+            'created_at' => now()
         ]);
     }
 
