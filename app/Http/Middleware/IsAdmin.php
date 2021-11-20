@@ -18,7 +18,7 @@ class IsAdmin
     public function handle(Request $request, Closure $next)
     {
         if (Auth::user()->is_admin !== 1) {
-            return redirect()->route('dashboard');
+            return redirect()->route('user.dashboard');
         }
 
         return $next($request);

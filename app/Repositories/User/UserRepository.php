@@ -11,15 +11,6 @@ use App\Models\User;
 class UserRepository implements InterfaceUserRepository
 {
 
-    /**
-     * @var User
-     */
-    private $user;
-
-    public function __construct(User $user)
-    {
-        $this->user = $user;
-    }
 
     /**
      * @return User[]|\Illuminate\Database\Eloquent\Collection
@@ -41,10 +32,10 @@ class UserRepository implements InterfaceUserRepository
 
     /**
      * @param int $id
-     * @param string $status
+     * @param int $status
      * @return bool
      */
-    public function editUserAccountStatus(int $id, string $status): bool
+    public function editUserAccountStatus(int $id, int $status): bool
     {
         $user = User::find($id);
         $user->account_status = $status;

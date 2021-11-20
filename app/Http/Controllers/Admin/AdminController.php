@@ -15,11 +15,11 @@ class AdminController extends Controller
     /**
      * @var InterfaceUserRepository
      */
-    private $user;
+    private $userRepository;
 
-    public function __construct(InterfaceUserRepository $user)
+    public function __construct(InterfaceUserRepository $userRepository)
     {
-        $this->user = $user;
+        $this->userRepository = $userRepository;
     }
 
     public function index()
@@ -74,11 +74,10 @@ class AdminController extends Controller
     }
 
 
-    public function suspendedUser(int $user_id, string $status)
+    public function changeUserStatus(int $user_id, int $status)
     {
         $user = User::find($user_id);
-        Auth::user()->impersonate($user);
-        return redirect()->route('admin.dashboard')->withInput()->withErrors(['User cloned']);
+        return redirect()->route('admin.view_users')->withInput()->withErrors(['User suspended']);
     }
 
 }
