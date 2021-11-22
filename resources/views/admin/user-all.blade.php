@@ -21,6 +21,7 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Status</th>
                 <th>View</th>
             </tr>
             </thead>
@@ -28,6 +29,7 @@
             <tr>
                 <th>ID</th>
                 <th>Name</th>
+                <th>Status</th>
                 <th>View</th>
             </tr>
             </tfoot>
@@ -36,6 +38,15 @@
                 <tr>
                     <td class="text-start">ID #{{ $user->id }}</td>
                     <td class="text-start">{{ $user->name }}</td>
+                    <td class="text-start">
+                        <span class="
+                        @if ($user->account_status == 'Active')
+                            text-success
+                        @else
+                            text-danger
+                        @endif
+                            ">{{ $user->account_status }}</span>
+                    </td>
                     <td class="text-end"><a href="{{ route('admin.view_user', ['user_id' => $user->id]) }}">View</a></td>
                 </tr>
             @endforeach

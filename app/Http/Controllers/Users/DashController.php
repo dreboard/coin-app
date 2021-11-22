@@ -12,7 +12,6 @@ class DashController extends Controller
     public function index()
     {
         try{
-            //return view('dashboard');
             return view('users.dashboard');
         }catch (\Throwable $e){
             Log::error($e->getMessage());

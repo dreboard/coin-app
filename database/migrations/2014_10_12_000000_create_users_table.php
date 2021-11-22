@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -46,6 +47,9 @@ class CreateUsersTable extends Migration
             'account_status' => 1,
             'created_at' => now()
         ]);
+        User::factory()
+            ->count(3)
+            ->create();
     }
 
     /**

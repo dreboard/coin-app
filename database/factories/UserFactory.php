@@ -21,7 +21,7 @@ class UserFactory extends Factory
             'email_verified_at' => Arr::random([now(),null]),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'is_admin' => 0,
-            'account_status' => Arr::random(['active','suspended']),
+            'account_status' => rand(0,1),
             'remember_token' => Str::random(10),
         ];
     }

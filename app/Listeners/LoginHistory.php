@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class LoginHistory
@@ -33,7 +34,11 @@ class LoginHistory
      */
     public function handle(Login $event)
     {
-        Log::info($event->user->email.' User logged in');
+        DB::table('login_history')->insert([
+            'user_id' => $event->user->id,
+            'created_at' => now()
+        ]);
+        //Log::info($event->user->email.' User logged in');
         return $event;
     }
 }

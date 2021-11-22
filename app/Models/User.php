@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Users\UserLogin;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -54,5 +55,19 @@ class User extends Authenticatable implements MustVerifyEmail
     public function canBeImpersonated()
     {
         return $this->can_be_impersonated == 1;
+    }
+
+    public function getAccountStatusAttribute($value)
+    {
+        if ($value == 1){
+            return 'Active';
+        }
+        return 'Suspended';
+    }
+
+
+    public function logins()
+    {
+        return $this->hasMany(UserLogin::class);
     }
 }

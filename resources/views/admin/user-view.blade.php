@@ -23,10 +23,10 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+{{--                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">--}}
                                 <div class="mt-3">
                                     <h4>{{ $user->name }}</h4>
-                                    <p class="text-secondary mb-1">Full Stack Developer</p>
+                                    <p class="text-secondary mb-1">Logins: {{ $user->logins_count }}</p>
                                     <button class="btn btn-outline-primary">Message</button>
 
                                         <a class="btn btn-warning" href="{{ route('admin.clone_user', $user->id) }}" role="button">Clone</a>
@@ -87,7 +87,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Full Name</h6>
+                                    <h6 class="mb-0">User Name</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     {{ $user->name }}
@@ -105,28 +105,63 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Phone</h6>
+                                    <h6 class="mb-0">Last Login</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    (239) 816-9029
+                                    $user->last_login->created_at
+
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Mobile</h6>
+                                    <h6 class="mb-0">Verified</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    (320) 380-4539
+                                    {{ $user->email_verified_at }}
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Address</h6>
+                                    <h6 class="mb-0">Status</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    Bay Area, San Francisco, CA
+
+                                    <span class="
+                                        @if ($user->account_status == 'Active')
+                                        text-success
+                                        @else
+                                        text-danger
+                                        @endif
+                                        ">{{ $user->account_status }}</span>
+                                    |
+
+                                    @if($user->account_status == 'Active')
+                                        <button id="status_user" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#statusUserModal">Suspend</button>
+                                    @else
+                                        <button id="status_user" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#statusUserModal">Activate</button>
+                                    @endif
+
+
+                                    <div class="modal fade" id="statusUserModal" tabindex="-1" aria-labelledby="statusUserModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="statusUserModalLabel">Delete {{ $user->name }}</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    You are about to Active/Suspend {{ $user->name }}.
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <a class="btn btn-danger" href="{{ route('admin.user_status', ['user_id' => $user->id])  }}" role="button">YES</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                             <hr>

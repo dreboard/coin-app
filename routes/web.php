@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Users\DashController;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ try {
     |
     */
     Route::middleware(['auth', 'verified'])->group(function () {
+
         Route::prefix('admin')
             ->middleware(['is_admin'])
             ->name('admin.')
@@ -44,7 +46,7 @@ try {
         Route::prefix('user')
             ->name('user.')
             ->group(function () {
-                Route::get('/user/dashboard', [DashController::class, 'index'])->name('dashboard');
+                Route::get('/dashboard', [DashController::class, 'index'])->name('dashboard');
                 Route::get('/user_profile', [DashController::class, 'viewProfile'])->name('user_profile');
             });
 
