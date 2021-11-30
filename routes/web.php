@@ -28,7 +28,7 @@ try {
     |--------------------------------------------------------------------------
     |
     */
-    Route::middleware(['auth', 'verified'])->group(function () {
+    Route::middleware(['auth', 'verified', 'is_banned'])->group(function () {
 
         Route::prefix('admin')
             ->middleware(['is_admin'])
