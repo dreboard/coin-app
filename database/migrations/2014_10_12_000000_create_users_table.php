@@ -29,6 +29,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
+        // Known users for testing
         DB::table('users')->insert([
             'name' => 'dreboard',
             'email' => 'dre.board@gmail.com',
