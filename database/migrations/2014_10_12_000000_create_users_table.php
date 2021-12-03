@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->integer('is_admin')->default(0);
             $table->integer('account_status')->default(1); // '1 = active','0 = suspended'
+            $table->boolean('profile_visibility')->default('1');
             $table->rememberToken();
             $table->timestamps();
         });

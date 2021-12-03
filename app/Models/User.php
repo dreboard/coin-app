@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Users\UserLogin;
+use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -70,4 +71,15 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(UserLogin::class);
     }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    protected static function newFactory()
+    {
+        return UserFactory::new();
+    }
+
 }

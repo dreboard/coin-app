@@ -19,7 +19,7 @@
         <table id="user_datatable" class="table datatable">
             <thead>
             <tr>
-                <th>ID</th>
+                <th>ID #</th>
                 <th>Name</th>
                 <th>Status</th>
                 <th>View</th>
@@ -27,7 +27,7 @@
             </thead>
             <tfoot>
             <tr>
-                <th>ID</th>
+                <th>ID #</th>
                 <th>Name</th>
                 <th>Status</th>
                 <th>View</th>
@@ -36,7 +36,7 @@
             <tbody>
             @foreach ($users as $user)
                 <tr>
-                    <td class="text-start">ID #{{ $user->id }}</td>
+                    <td class="text-start">{{ $user->id }}</td>
                     <td class="text-start">{{ $user->name }}</td>
                     <td class="text-start">
                         <span class="

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Admin;
+namespace Tests\Unit\User;
 
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
-class AdminTasksTest extends TestCase
+class UserTasksTest extends TestCase
 {
 
     use RefreshDatabase;
@@ -74,6 +74,18 @@ class AdminTasksTest extends TestCase
         $this->withoutExceptionHandling();
         $response = $this->actingAs($this->unverified_user)->get(route('user.dashboard'));
         $response->assertRedirect('verify-email');
+    }
+
+    /**
+     * @test
+     *
+     * basic users can not access admin dashboard
+     */
+    public function test_users_cannot_view_admin_dashboard()
+    {
+        $this->withoutExceptionHandling();
+        $response = $this->actingAs($this->active_user)->get(route('admin.dashboard'));
+        $response->assertRedirect('user/dashboard');
     }
 
 

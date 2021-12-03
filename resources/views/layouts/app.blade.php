@@ -7,6 +7,13 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+        <script async>
+            (function() {
+                let X_CSRF_TOKEN = {{ csrf_token() }};
+                let ENVIRONMENT = {{ config('app.env') }};
+                let SITE_URL = {{ config('app.url') }};
+            })();
+        </script>
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 

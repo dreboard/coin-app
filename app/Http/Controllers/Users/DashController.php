@@ -19,10 +19,6 @@ class DashController extends Controller
         }
     }
 
-    public function viewProfile()
-    {
-        return view('users.settings.profile');
-    }
 
 
 }

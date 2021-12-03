@@ -79,7 +79,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Full Name</h6>
+                                    <h6 class="mb-0">User Name</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     {{ auth()->user()->name }}
@@ -97,19 +97,32 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Phone</h6>
+                                    <h6 class="mb-0">Visibility</h6>
                                 </div>
-                                <div class="col-sm-9 text-secondary">
-                                    (239) 816-9029
+                                <div class="col-sm-9 text-secondary" id="profile_visibility" data-visibility="{{ auth()->user()->profile_visibility }}">
+                                    <!-- Checked switch -->
+                                    <div class="form-check form-switch" id="profile_visibility_on">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="profile_visibility_check"  value="{{ auth()->user()->profile_visibility }}"
+                                               {{ (auth()->user()->profile_visibility == 1 ? 'checked' : '')}}
+                                        />
+                                        <label
+                                            class="form-check-label {{ (auth()->user()->profile_visibility == 1 ? 'text-success' : 'text-danger')}}"
+                                            for="profile_visibility_check" id="profile_visibility_label">
+                                            {{ (auth()->user()->profile_visibility == 1 ? 'Public' : 'Private')}}
+                                        </label>
+                                    </div>
+
+
+
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Mobile</h6>
+                                    <h6 class="mb-0">Security</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    (320) 380-4539
+                                    <a class="btn btn-info" href=" {{ route('user.user_change_password') }} ">Change Password</a>
                                 </div>
                             </div>
                             <hr>
@@ -195,5 +208,68 @@
         </div>
     </div>
 
+@push('scripts')
+<script>
 
+    (function() {
+
+        try{
+            // profile_visibility_on
+            const pro_vis = document.getElementById("profile_visibility_check").value;
+            const profile_visibility_label = document.getElementById("profile_visibility_label");
+            document.getElementById("profile_visibility_check").addEventListener('click', getData);
+            if (typeof pro_vis !== 'undefined') {
+                console.log(pro_vis);
+            } else {
+                console.log('nope');
+            }
+            console.log(SITE_URL);
+            console.log(ENVIRONMENT);
+            console.log(CSRF_TOKEN);
+            console.log(USER_ID);
+
+            function getData(){
+                fetch(SITE_URL+'/user/user_change_visibility', {
+                    headers: { "Content-Type": "application/json; charset=utf-8" },
+                    method: 'POST',
+                    body: JSON.stringify({
+                        _token: @json(csrf_token()),
+                        id: {{ auth()->user()->id }},
+                        profile_visibility: document.getElementById("profile_visibility_check").value
+                    })
+                }).then(response => response.json())
+                    .then(data => {
+                        document.getElementById("profile_visibility_check").value = data;
+                        if(data == 1){
+                            profile_visibility_label.innerHTML = 'Public';
+                            profile_visibility_label.classList.add('text-success');
+                            profile_visibility_label.classList.remove('text-danger');
+                        } else {
+                            profile_visibility_label.innerHTML = 'Private';
+                            profile_visibility_label.classList.add('text-danger');
+                            profile_visibility_label.classList.remove('text-success');
+                        }
+                        console.log('Success:', data);
+                        console.log(profile_visibility_label.innerHTML);
+                    })
+                    //.then(data => console.log(data))
+            }
+
+        }catch (error){
+            if (ENVIRONMENT == 'local'){
+                console.error(error);
+            }
+
+        }
+
+
+
+
+    })();
+
+
+
+</script>
+
+@endpush
 @endsection
