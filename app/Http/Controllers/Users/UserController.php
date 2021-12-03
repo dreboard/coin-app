@@ -70,8 +70,10 @@ class UserController extends Controller
         } else {
             $int = 0;
         }
-
-        $user = User::find(Auth::user()->id);
+        if ($request->input('id') !== auth()->user()->id) {
+            abort(401);
+        }
+        $user = User::find($request->input('id'));
         $user->profile_visibility = $int;
         $user->save();
         $user->refresh();
