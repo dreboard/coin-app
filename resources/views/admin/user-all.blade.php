@@ -9,7 +9,10 @@
 @endsection
 
 @section('content')
-    <h3 class="mt-4">Admin Dashboard</h3>
+    @push('header')
+        <h3 class="mt-4">Admin Dashboard</h3>
+    @endpush
+
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a> </li>
         <li class="breadcrumb-item active"><a href="{{ route('admin.view_users') }}">Users</a></li>

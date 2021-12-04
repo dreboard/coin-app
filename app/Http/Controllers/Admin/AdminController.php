@@ -64,7 +64,8 @@ class AdminController extends Controller
      */
     public function viewAllUsers()
     {
-        $users = User::all('id', 'name', 'created_at', 'account_status');
+        $users = $this->userRepository->getAllUsers();
+        //$users = User::all('id', 'name', 'created_at', 'account_status');
         return view('admin.user-all', compact('users'));
 
     }

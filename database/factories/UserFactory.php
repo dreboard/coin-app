@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -68,6 +69,20 @@ class UserFactory extends Factory
         return $this->state(function (array $attributes) {
             return [
                 'is_admin' => 1,
+            ];
+        });
+    }
+
+    /**
+     * Indicate that the user is suspended.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function isBanned(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'banned_until' => Carbon::now()->addDays(7),
             ];
         });
     }

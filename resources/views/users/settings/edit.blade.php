@@ -9,9 +9,12 @@
 @endsection
 
 @section('content')
-    <p>Change password</p>
 
-     {{ __(auth()->user()->password) }}
+    @push('header')
+        <h1 class="mt-4">Change password</h1>
+    @endpush
+
+
     <div class="container">
         <div class="main-body">
 

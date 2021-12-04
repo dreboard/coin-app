@@ -4,6 +4,8 @@ namespace App\Repositories\User;
 
 use App\Interfaces\Users\InterfaceUserRepository;
 use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 /**
  *
@@ -13,11 +15,18 @@ class UserRepository implements InterfaceUserRepository
 
 
     /**
-     * @return User[]|\Illuminate\Database\Eloquent\Collection
+     * @return
      */
     public function getAllUsers()
     {
-        return User::all();
+        if (Cache::has('users')) {
+            return Cache::get('users');
+        }
+
+        return Cache::remember('users', now()->addMonth(), function () {
+            return User::all();
+        });
+
     }
 
     /**
@@ -43,7 +52,21 @@ class UserRepository implements InterfaceUserRepository
         return true;
     }
 
-
+    /**
+     * Ban a user for a specified amount of days
+     *
+     * @param int $until
+     * @param $user_id
+     */
+    public function ban(int $user_id, int $until = 7)
+    {
+        // $until = 7 days
+        // $until = 14 days
+        // ban_permanently = 0
+        $user = User::find($user_id);
+        $user->banned_till = Carbon::now()->addDays($until);
+        $user->save();
+    }
 
 
 }
