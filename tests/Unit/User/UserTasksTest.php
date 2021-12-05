@@ -42,10 +42,12 @@ class UserTasksTest extends TestCase
 
     public function test_users_can_authenticate_using_the_login_screen()
     {
-
+        $this->withoutExceptionHandling();
+        $this->withMiddleware();
         $response = $this->post('/login', [
             'email' => $this->active_user->email,
             'password' => 'password',
+
         ]);
 
         $this->assertAuthenticated();
@@ -110,7 +112,7 @@ class UserTasksTest extends TestCase
     public function test_user_new_password_required_on_change_password()
     {
         $this->withExceptionHandling();
-        $this->withMiddleware();
+        $this->withoutMiddleware();
 
         $response = $this->actingAs($this->active_user)->post('user/user_save_password', [
             'current_password' => 'password', //$this->active_user->password,
@@ -126,7 +128,7 @@ class UserTasksTest extends TestCase
     public function test_user_confirm_password_required_on_change_password()
     {
         $this->withExceptionHandling();
-        $this->withMiddleware();
+        $this->withoutMiddleware();
 
         $response = $this->actingAs($this->active_user)->post('user/user_save_password', [
             'current_password' => 'password', //$this->active_user->password,

@@ -31,7 +31,7 @@ class AdminTasksTest extends TestCase
 
     public function test_users_can_authenticate_using_the_login_screen()
     {
-
+        $this->withMiddleware();
         $response = $this->post('/login', [
             'email' => $this->active_user->email,
             'password' => 'password',
