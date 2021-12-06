@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Users\UserLogin;
+use Cog\Laravel\Ban\Traits\Bannable;
 use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,6 +16,7 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
     use Impersonate;
+    use Bannable;
 
     /**
      * The attributes that are mass assignable.

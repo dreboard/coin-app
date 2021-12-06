@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Interfaces\Users\InterfaceUserRepository;
 use App\Models\User;
+use App\Models\Users\UserLogin;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -39,6 +41,8 @@ class AdminController extends Controller
 
 
     /**
+     * Find user from search form
+     *
      * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
@@ -47,42 +51,48 @@ class AdminController extends Controller
         $request->validate([
             'searchTerm' => 'required'
         ]);
-
         $searchTerm = $request->input('searchTerm');
-        //$data = User::where('id', '=', $searchTerm)->first();
-        //dd($data); die;
-
         $data = User::where('id', '=', $searchTerm)
             ->orWhere('name', 'LIKE', "%{$searchTerm}%")->get();
-        //dd($data); die;
         return view('admin.user-results', ['users' => $data]);
     }
 
 
     /**
+     * View all users
+     *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function viewAllUsers()
     {
         $users = $this->userRepository->getAllUsers();
-        //$users = User::all('id', 'name', 'created_at', 'account_status');
         return view('admin.user-all', compact('users'));
 
     }
 
     /**
+     * View a user
+     *
      * @param int $user_id
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function viewUser(int $user_id)
     {
         $user = User::where('id',$user_id)->withCount('logins')->first();
-        $user->last_login = DB::table('login_history')->where('user_id', '=', $user_id)->orderBy('created_at', 'DESC')->first() ?? 'No Data';
-        return view('admin.user-view', compact('user'));
+
+
+        $last_login = UserLogin::where('user_id', $user_id)
+            ->select('created_at')
+            ->orderBy('created_at', 'DESC')
+            ->first();
+
+        return view('admin.user-view', ['user' => $user, 'login_date' => $last_login]);
 
     }
 
     /**
+     * Delete a user
+     *
      * @param int $user_id
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -94,6 +104,8 @@ class AdminController extends Controller
     }
 
     /**
+     * Clone a user
+     *
      * @param int $user_id
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -106,6 +118,8 @@ class AdminController extends Controller
 
 
     /**
+     * Change a user status
+     *
      * @param int $user_id
      * @param int $status
      * @return \Illuminate\Http\RedirectResponse
@@ -128,6 +142,31 @@ class AdminController extends Controller
         return redirect()->action(
             [AdminController::class, 'viewUser'], ['user_id' => $user_id]
         );
+    }
+
+    public function banUser(int $user_id)
+    {
+        $user = User::find($user_id);
+        $user->ban([
+            'expired_at' => '+1 month',
+        ]);
+
+    }
+
+    public function banUserPermanent(int $user_id)
+    {
+        $user = User::find($user_id);
+        $ban = $user->ban();
+        $ban->isPermanent();
+
+    }
+
+
+    public function unbanUser(int $user_id)
+    {
+        $user = User::find($user_id);
+        $user->unban();
+
     }
 
 }

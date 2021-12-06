@@ -108,8 +108,11 @@
                                     <h6 class="mb-0">Last Login</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    $user->last_login->created_at
-
+                                    @empty($last_login)
+                                        <span class="text-danger">No Login Data</span>
+                                    @else
+                                        {{$last_login->format('l jS F Y, g:ia')}}
+                                    @endempty
                                 </div>
                             </div>
                             <hr>
@@ -118,7 +121,12 @@
                                     <h6 class="mb-0">Verified</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    {{ $user->email_verified_at }}
+                                    @empty($user->email_verified_at)
+                                        <span class="text-danger">User Unverified</span>
+                                    @else
+                                        {{ $user->email_verified_at->format('l jS F Y, g:ia') ?? 'No Data' }}
+                                    @endempty
+
                                 </div>
                             </div>
                             <hr>

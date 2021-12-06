@@ -163,6 +163,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Krlove\EloquentModelGenerator\Provider\GeneratorServiceProvider::class,
         Lab404\Impersonate\ImpersonateServiceProvider::class,
+        Cog\Laravel\Ban\Providers\BanServiceProvider::class,
 
         /*
          * Package Service Providers...

@@ -25,20 +25,20 @@ try {
     });
     /*
     |--------------------------------------------------------------------------
-    | User Routes
+    | Site web Routes
     |--------------------------------------------------------------------------
     |
     */
-    Route::middleware(['auth', 'verified', 'is_banned'])->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
 
         /*
         |-------------------------------------------------------------------------------
         | Admin section
         |-------------------------------------------------------------------------------
-        | URL:            /admin/dashboard
+        | Prefix:         admin/ OR .admin
         | Controller:     Admin/AdminController
-        | Method:         GET
-        |Description:    View the admin dashboard
+        | Method:         MIXED
+        | Description:    Admin actions
         */
         Route::prefix('admin')
             ->middleware(['is_admin'])
@@ -58,13 +58,14 @@ try {
         |-------------------------------------------------------------------------------
         | User section
         |-------------------------------------------------------------------------------
-        | URL:            /user/dashboard
+        | Prefix:         user/ OR .user
         | Controller:     Users/UserController
-        | Method:         GET
-        |Description:    View the admin dashboard
+        | Method:         MIXED
+        | Description:    User actions
         */
         Route::prefix('user')
             ->name('user.')
+            ->middleware(['forbid-banned-user'])
             ->group(function () {
                 Route::get('/dashboard', [DashController::class, 'index'])->name('dashboard');
                 Route::get('/user_profile', [UserController::class, 'viewProfile'])->name('user_profile');
@@ -78,6 +79,15 @@ try {
 
 
 
+    /*
+    |-------------------------------------------------------------------------------
+    | Auth Routes
+    |-------------------------------------------------------------------------------
+    | Prefix:         NONE
+    | Controller:     RegisteredUserController, AuthenticatedSessionController, PasswordResetLinkController
+    | Method:         MIXED
+    | Description:    Auth routes
+    */
     require __DIR__.'/auth.php';
 
 }catch (\Throwable $e){
