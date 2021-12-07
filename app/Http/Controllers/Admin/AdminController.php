@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Interfaces\Users\InterfaceUserRepository;
 use App\Models\User;
 use App\Models\Users\UserLogin;
+use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -70,6 +71,21 @@ class AdminController extends Controller
 
     }
 
+
+    /**
+     * View all users
+     *
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
+    public function viewAllBannedUsers()
+    {
+        $users = $this->userRepository->getAllBannedUsers();
+        return view('admin.user-all-banned', compact('users'));
+
+    }
+
+
+
     /**
      * View a user
      *
@@ -85,8 +101,8 @@ class AdminController extends Controller
             ->select('created_at')
             ->orderBy('created_at', 'DESC')
             ->first();
-
-        return view('admin.user-view', ['user' => $user, 'login_date' => $last_login]);
+        //dd($last_login->created_at->format('l jS F Y, g:ia'));
+        return view('admin.user-view', ['user' => $user, 'last_login' => $last_login]);
 
     }
 
@@ -144,7 +160,7 @@ class AdminController extends Controller
         );
     }
 
-    public function banUser(int $user_id)
+    public function banUserPermanent(int $user_id)
     {
         $user = User::find($user_id);
         $user->ban([
@@ -153,20 +169,43 @@ class AdminController extends Controller
 
     }
 
-    public function banUserPermanent(int $user_id)
+    public function banUser(Request $request): \Illuminate\Http\RedirectResponse
     {
-        $user = User::find($user_id);
-        $ban = $user->ban();
-        $ban->isPermanent();
+        $user = User::find($request->input('user_id'));
+
+        if($request->input('length') == 0){
+            $ban = $user->ban([
+                'expired_at' => null,
+            ]);
+            $ban->isPermanent();
+        } else {
+            $ban = $user->ban([
+                'expired_at' => Carbon::now()->addDays($request->input('length')),
+            ]);
+            $ban->isTemporary();
+        }
+        return redirect()->action(
+            [AdminController::class, 'viewUser'], ['user_id' => $request->input('user_id')]
+        );
 
     }
 
+
+    public function unbanAllUsers(int $user_id)
+    {
+        app(\Cog\Contracts\Ban\BanService::class)->deleteExpiredBans();
+        return redirect()->action(
+            [AdminController::class, 'viewAllUsers']
+        );
+    }
 
     public function unbanUser(int $user_id)
     {
         $user = User::find($user_id);
         $user->unban();
-
+        return redirect()->action(
+            [AdminController::class, 'viewUser'], ['user_id' => $user_id]
+        );
     }
 
 }

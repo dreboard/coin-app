@@ -26,7 +26,6 @@ class CreateUsersTable extends Migration
             $table->integer('is_admin')->default(0);
             $table->integer('account_status')->default(1); // '1 = active','0 = suspended'
             $table->boolean('profile_visibility')->default('1');
-            $table->string('banned_till')->nullable();
             $table->timestamp('banned_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

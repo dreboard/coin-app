@@ -108,10 +108,10 @@
                                     <h6 class="mb-0">Last Login</h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-                                    @empty($last_login)
+                                @empty($last_login->created_at)
                                         <span class="text-danger">No Login Data</span>
                                     @else
-                                        {{$last_login->format('l jS F Y, g:ia')}}
+                                        {{$last_login->created_at->format('l jS F Y, g:ia')}}
                                     @endempty
                                 </div>
                             </div>
@@ -132,43 +132,42 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">Status</h6>
+                                    <h6 class="mb-0">
+                                        @if($user->isBanned())
+                                            <span class="text-danger">Suspended</span>
+
+                                        @else
+                                            <span class="text-success">Active</span>
+                                        @endif
+                                    </h6>
                                 </div>
                                 <div class="col-sm-9 text-secondary">
-
-                                    <span class="
-                                        @if ($user->account_status == 'Active')
-                                        text-success
-                                        @else
-                                        text-danger
-                                        @endif
-                                        ">{{ $user->account_status }}</span>
-                                    |
-
-                                    @if($user->account_status == 'Active')
-                                        <button id="status_user" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#statusUserModal">Suspend</button>
+                                    @if($user->isBanned())
+                                        <a id="status_user" class="btn btn-success" href="{{ route('admin.unban_user', ['user_id' => $user->id])  }}">Activate </a>
                                     @else
-                                        <button id="status_user" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#statusUserModal">Activate</button>
+                                        <form class="row row-cols-lg-auto g-3 align-items-center" method="POST" action="{{ route('admin.ban_user')  }}">
+                                            @csrf
+                                            <input type="hidden" name="user_id" value="{{$user->id}}">
+                                            <div class="col-8">
+                                                <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+                                                <select class="form-select" name="length">
+                                                    <option selected> Suspend User</option>
+                                                    <option value="7">1 Week</option>
+                                                    <option value="30">1 Month</option>
+                                                    <option value="0">Forever</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <button type="submit" class="btn btn-danger">Suspend</button>
+                                            </div>
+                                        </form>
                                     @endif
 
 
-                                    <div class="modal fade" id="statusUserModal" tabindex="-1" aria-labelledby="statusUserModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="statusUserModalLabel">Delete {{ $user->name }}</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    You are about to Active/Suspend {{ $user->name }}.
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <a class="btn btn-danger" href="{{ route('admin.user_status', ['user_id' => $user->id])  }}" role="button">YES</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
+
+
 
                                 </div>
                             </div>

@@ -19,12 +19,6 @@
     </ol>
 
     <div class="card-body">
-
-        <div class="mb-4">
-            <a class="btn btn-danger" href="{{ route('admin.view_banned_users') }}">Suspended Users</a>
-        </div>
-
-
         <table id="user_datatable" class="table datatable">
             <thead>
             <tr>

@@ -19,14 +19,15 @@ class UserRepository implements InterfaceUserRepository
      */
     public function getAllUsers()
     {
-        if (Cache::has('users')) {
-            return Cache::get('users');
-        }
+        return User::withoutBanned()->get();
+    }
 
-        return Cache::remember('users', now()->addMonth(), function () {
-            return User::all();
-        });
-
+    /**
+     * @return
+     */
+    public function getAllBannedUsers()
+    {
+        return User::onlyBanned()->get();
     }
 
     /**

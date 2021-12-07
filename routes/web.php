@@ -48,10 +48,14 @@ try {
                 Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
                 Route::get('/view_user/{user_id}', [AdminController::class, 'viewUser'])->name('view_user')->where('user_id', '[0-9]+');
                 Route::get('/view_users', [AdminController::class, 'viewAllUsers'])->name('view_users');
+                Route::get('/view_banned_users', [AdminController::class, 'viewAllBannedUsers'])->name('view_banned_users');
                 Route::post('/find_user', [AdminController::class, 'findUser'])->name('find_user');
                 Route::get('/delete_user/{user_id}', [AdminController::class, 'deleteUser'])->name('delete_user')->where('user_id', '[0-9]+');
                 Route::get('/clone_user/{user_id}', [AdminController::class, 'cloneUser'])->name('clone_user')->where('user_id', '[0-9]+');
                 Route::get('/user_status/{user_id}', [AdminController::class, 'changeUserStatus'])->name('user_status')->where('user_id', '[0-9]+');
+                Route::post('/ban_user', [AdminController::class, 'banUser'])->name('ban_user');
+                Route::get('/unban_user/{user_id}', [AdminController::class, 'unbanUser'])->name('unban_user')->where('user_id', '[0-9]+');
+
             });
 
         /*
