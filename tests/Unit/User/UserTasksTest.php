@@ -35,7 +35,6 @@ class UserTasksTest extends TestCase
     {
         parent::setUp();
         $this->active_user = User::factory()->create();
-        $this->banned_user = User::factory()->suspended()->create();
         $this->unverified_user = User::factory()->unverified()->create();
     }
 
@@ -63,19 +62,7 @@ class UserTasksTest extends TestCase
         $response->assertViewIs("users.settings.profile");
     }
 
-    /**
-     * @test
-     *
-     * not authenticated and requested a protected route, you'll receive a redirection response to login with status 302
-     */
-    public function test_users_cannot_view_dashboard_when_banned()
-    {
-        $this->withoutExceptionHandling();
-        $response = $this->actingAs($this->banned_user)->get(route('user.dashboard'));
-        $response->assertStatus(302);
-        $response->assertRedirect(route('login'));
-        $this->assertGuest();
-    }
+
 
     /**
      * @test

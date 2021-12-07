@@ -69,7 +69,7 @@ try {
         */
         Route::prefix('user')
             ->name('user.')
-            ->middleware(['forbid-banned-user'])
+            ->middleware(['forbid-banned-user', 'is_online'])
             ->group(function () {
                 Route::get('/dashboard', [DashController::class, 'index'])->name('dashboard');
                 Route::get('/user_profile', [UserController::class, 'viewProfile'])->name('user_profile');
