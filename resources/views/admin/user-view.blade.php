@@ -118,7 +118,6 @@
                                     <h6 class="mb-0">
                                         @if($user->isBanned())
                                             <span class="text-danger">Suspended</span>
-
                                         @else
                                             <span class="text-success">Active</span>
                                         @endif
@@ -126,7 +125,12 @@
                                 </div>
                                 <div class="col-sm-9 text-secondary">
                                     @if($user->isBanned())
-                                        <a id="status_user" class="btn btn-success" href="{{ route('admin.unban_user', ['user_id' => $user->id])  }}">Activate </a>
+                                        @if ($user->banned_at == null)
+                                            <span class="text-success">Active</span>
+                                        @else
+                                            <span class="text-danger"> {{ $user->banned_at->format('F jS Y, g:ia') }}</span>
+                                        @endif
+                                            <a id="status_user" class="btn btn-success" href="{{ route('admin.unban_user', ['user_id' => $user->id])  }}">Activate </a>
                                     @else
                                         <form class="row row-cols-lg-auto g-3 align-items-center" method="POST" action="{{ route('admin.ban_user')  }}">
                                             @csrf
@@ -134,7 +138,7 @@
                                             <div class="col-8">
                                                 <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
                                                 <select class="form-select" name="length">
-                                                    <option selected> Suspend User</option>
+                                                    <option selected value=""> Suspend User</option>
                                                     <option value="7">1 Week</option>
                                                     <option value="30">1 Month</option>
                                                     <option value="0">Forever</option>

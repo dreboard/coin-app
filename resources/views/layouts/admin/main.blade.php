@@ -31,8 +31,15 @@
                 </div>
             @endif
                 @if (session('status'))
-                    <div class="alert alert-success">
+                    <div class="alert alert-info">
                         {{ session('status') }}
+                    </div>
+                @endif
+                @if (session('success'))
+                    <div class="alert alert-success">
+                        <ul>
+                            <li>{{ session('success') }}</li>
+                        </ul>
                     </div>
                 @endif
             <div class="container-fluid px-4">

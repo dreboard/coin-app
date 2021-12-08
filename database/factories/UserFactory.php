@@ -46,7 +46,7 @@ class UserFactory extends Factory
 
 
     /**
-     * Indicate that the user is suspended.
+     * Indicate that the user is an admin.
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */

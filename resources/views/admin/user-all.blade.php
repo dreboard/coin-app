@@ -48,13 +48,12 @@
                     <td class="text-start">{{ $user->id }}</td>
                     <td class="text-start">{{ $user->name }}</td>
                     <td class="text-start">
-                        <span class="
-                        @if ($user->account_status == 'Active')
-                            text-success
+                        <span class="">{{ $user->banned_at }}</span>
+                        @if ($user->banned_at == null)
+                            <span class="text-success">Active</span>
                         @else
-                            text-danger
+                            <span class="text-danger"> Banned {{ $user->banned_at->format('l F jS Y, g:ia') }}</span>
                         @endif
-                            ">{{ $user->account_status }}</span>
                     </td>
                     <td class="text-end"><a href="{{ route('admin.view_user', ['user_id' => $user->id]) }}">View</a></td>
                 </tr>

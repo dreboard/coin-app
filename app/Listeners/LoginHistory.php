@@ -30,7 +30,8 @@ class LoginHistory
     /**
      * Save user login to the login_history table
      *
-     * @param  object  $event
+     * @param Login $event
+     * @return Login|object
      */
     public function handle(Login $event)
     {
