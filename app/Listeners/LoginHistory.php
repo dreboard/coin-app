@@ -28,9 +28,10 @@ class LoginHistory
     }
 
     /**
-     * Handle the event.
+     * Save user login to the login_history table
      *
-     * @param  object  $event
+     * @param Login $event
+     * @return Login|object
      */
     public function handle(Login $event)
     {
@@ -38,7 +39,6 @@ class LoginHistory
             'user_id' => $event->user->id,
             'created_at' => now()
         ]);
-        //Log::info($event->user->email.' User logged in');
         return $event;
     }
 }

@@ -25,7 +25,6 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'is_admin' => 0,
-            'account_status' => 1,
             'profile_visibility' => 1,
             'remember_token' => Str::random(10),
         ];
@@ -45,22 +44,9 @@ class UserFactory extends Factory
         });
     }
 
-    /**
-     * Indicate that the user is suspended.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
-     */
-    public function suspended(): Factory
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'account_status' => 0,
-            ];
-        });
-    }
 
     /**
-     * Indicate that the user is suspended.
+     * Indicate that the user is an admin.
      *
      * @return \Illuminate\Database\Eloquent\Factories\Factory
      */
@@ -73,17 +59,4 @@ class UserFactory extends Factory
         });
     }
 
-    /**
-     * Indicate that the user is suspended.
-     *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
-     */
-    public function isBanned(): Factory
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'banned_until' => Carbon::now()->addDays(7),
-            ];
-        });
-    }
 }

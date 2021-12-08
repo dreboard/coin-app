@@ -25,20 +25,20 @@ try {
     });
     /*
     |--------------------------------------------------------------------------
-    | User Routes
+    | Site web Routes
     |--------------------------------------------------------------------------
     |
     */
-    Route::middleware(['auth', 'verified', 'is_banned'])->group(function () {
+    Route::middleware(['auth', 'verified'])->group(function () {
 
         /*
         |-------------------------------------------------------------------------------
         | Admin section
         |-------------------------------------------------------------------------------
-        | URL:            /admin/dashboard
+        | Prefix:         admin/ OR .admin
         | Controller:     Admin/AdminController
-        | Method:         GET
-        |Description:    View the admin dashboard
+        | Method:         MIXED
+        | Description:    Admin actions
         */
         Route::prefix('admin')
             ->middleware(['is_admin'])
@@ -48,23 +48,28 @@ try {
                 Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
                 Route::get('/view_user/{user_id}', [AdminController::class, 'viewUser'])->name('view_user')->where('user_id', '[0-9]+');
                 Route::get('/view_users', [AdminController::class, 'viewAllUsers'])->name('view_users');
+                Route::get('/view_banned_users', [AdminController::class, 'viewAllBannedUsers'])->name('view_banned_users');
                 Route::post('/find_user', [AdminController::class, 'findUser'])->name('find_user');
                 Route::get('/delete_user/{user_id}', [AdminController::class, 'deleteUser'])->name('delete_user')->where('user_id', '[0-9]+');
                 Route::get('/clone_user/{user_id}', [AdminController::class, 'cloneUser'])->name('clone_user')->where('user_id', '[0-9]+');
                 Route::get('/user_status/{user_id}', [AdminController::class, 'changeUserStatus'])->name('user_status')->where('user_id', '[0-9]+');
+                Route::post('/ban_user', [AdminController::class, 'banUser'])->name('ban_user');
+                Route::get('/unban_user/{user_id}', [AdminController::class, 'unbanUser'])->name('unban_user')->where('user_id', '[0-9]+');
+
             });
 
         /*
         |-------------------------------------------------------------------------------
         | User section
         |-------------------------------------------------------------------------------
-        | URL:            /user/dashboard
+        | Prefix:         user/ OR .user
         | Controller:     Users/UserController
-        | Method:         GET
-        |Description:    View the admin dashboard
+        | Method:         MIXED
+        | Description:    User actions
         */
         Route::prefix('user')
             ->name('user.')
+            ->middleware(['forbid-banned-user', 'is_online'])
             ->group(function () {
                 Route::get('/dashboard', [DashController::class, 'index'])->name('dashboard');
                 Route::get('/user_profile', [UserController::class, 'viewProfile'])->name('user_profile');
@@ -78,6 +83,15 @@ try {
 
 
 
+    /*
+    |-------------------------------------------------------------------------------
+    | Auth Routes
+    |-------------------------------------------------------------------------------
+    | Prefix:         NONE
+    | Controller:     RegisteredUserController, AuthenticatedSessionController, PasswordResetLinkController
+    | Method:         MIXED
+    | Description:    Auth routes
+    */
     require __DIR__.'/auth.php';
 
 }catch (\Throwable $e){
