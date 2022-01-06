@@ -15,8 +15,10 @@ use Laravel\Sanctum\HasApiTokens;
 
 /**
  * User model
- * @see {https://github.com/cybercog/laravel-ban#prepare-bannable-model}
- * @see {https://www.tutsmake.com/laravel-8-check-user-online-or-not-tutorial/?ref=morioh.com&utm_source=morioh.com}
+ *
+ * @see Online:         {https://www.tutsmake.com/laravel-8-check-user-online-or-not-tutorial/?ref=morioh.com&utm_source=morioh.com}
+ * @see Impersonate:    {https://github.com/404labfr/laravel-impersonate}
+ * @see Bannable:       {https://github.com/cybercog/laravel-ban}
  */
 class User extends Authenticatable implements MustVerifyEmail, BannableContract
 {

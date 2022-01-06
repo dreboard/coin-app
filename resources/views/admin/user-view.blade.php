@@ -23,10 +23,11 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center">
-{{--                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">--}}
                                 <div class="mt-3">
                                     <h4>{{ $user->name }}</h4>
                                     <p class="text-secondary mb-1">Logins: {{ $user->logins_count }}</p>
+
+                                    @if($user->is_admin != 1)
                                     <button class="btn btn-outline-primary">Message</button>
 
                                         <a class="btn btn-warning" href="{{ route('admin.clone_user', $user->id) }}" role="button">Clone</a>
@@ -34,6 +35,7 @@
                                     @endCanBeImpersonated
 
                                     <button id="delete_user" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal">Delete</button>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -112,7 +114,9 @@
 
                                 </div>
                             </div>
-                            <hr>
+
+                            @if($user->is_admin != 1)
+                                <hr>
                             <div class="row">
                                 <div class="col-sm-3">
                                     <h6 class="mb-0">
@@ -123,6 +127,7 @@
                                         @endif
                                     </h6>
                                 </div>
+
                                 <div class="col-sm-9 text-secondary">
                                     @if($user->isBanned())
                                         @if ($user->banned_at == null)
@@ -158,6 +163,7 @@
 
                                 </div>
                             </div>
+                            @endif
                             <hr>
                             <div class="row">
                                 <div class="col-sm-12">
