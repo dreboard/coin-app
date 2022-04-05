@@ -1,11 +1,11 @@
 {
-    "name": "laravel/laravel",
+    "name": "dreboard/example-app",
     "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "description": "The Basic Framework.",
+    "keywords": ["framework", "dreboard"],
     "license": "MIT",
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^7.3|^8.1",
         "cybercog/laravel-ban": "^4.6",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",

@@ -79,6 +79,8 @@ try {
             ->name('user.')
             ->middleware(['forbid-banned-user', 'is_online'])
             ->group(function () {
+
+                // General routes and settings
                 Route::get('/dashboard', [DashController::class, 'index'])->name('dashboard');
                 Route::get('/user_profile', [UserController::class, 'viewProfile'])->name('user_profile');
                 Route::get('/user_change_password', [UserController::class, 'changePassword'])->name('user_change_password');

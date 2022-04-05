@@ -60,8 +60,6 @@ class AdminUserActionsController
     }
 
 
-
-
     /**
      * View a user
      *
@@ -70,9 +68,7 @@ class AdminUserActionsController
      */
     public function viewUser(int $user_id)
     {
-        $user = User::where('id',$user_id)->withCount('logins')->first();
-
-
+        $user = User::where('id', $user_id)->withCount('logins')->first();
         $last_login = UserLogin::where('user_id', $user_id)
             ->select('created_at')
             ->orderBy('created_at', 'DESC')
@@ -94,8 +90,6 @@ class AdminUserActionsController
 
     }
 
-
-
     /**
      * Clone a user
      *
@@ -109,7 +103,6 @@ class AdminUserActionsController
         return redirect()->route('admin.dashboard')->withInput()->withErrors(['User cloned']);
     }
 
-
     /**
      * Change a user status
      *
@@ -120,11 +113,11 @@ class AdminUserActionsController
     public function changeUserStatus(int $user_id): \Illuminate\Http\RedirectResponse
     {
         $user = User::find($user_id);
-        if ($user->account_status === 'Active'){
+        if ($user->account_status === 'Active') {
             $user->account_status = 0;
             $msg = 'User status is suspended';
             $with = 'withError';
-        }elseif ($user->account_status === 'Suspended') {
+        } elseif ($user->account_status === 'Suspended') {
             $user->account_status = 1;
             $msg = 'User status is active';
             $with = 'withSuccess';
