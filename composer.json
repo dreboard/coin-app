@@ -6,24 +6,24 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.1",
-        "cybercog/laravel-ban": "^4.6",
-        "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.0.1",
-        "lab404/laravel-impersonate": "^1.7",
-        "laravel/framework": "^v8.68.1",
-        "laravel/sanctum": "^2.11",
-        "laravel/tinker": "^2.5"
+        "cybercog/laravel-ban": "^4.7.0",
+        "fruitcake/laravel-cors": "^v2.2.0",
+        "guzzlehttp/guzzle": "^7.4.2",
+        "lab404/laravel-impersonate": "^1.7.3",
+        "laravel/framework": "^v8.83.6",
+        "laravel/sanctum": "^2.15.0",
+        "laravel/tinker": "^v2.7.2"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.6",
-        "facade/ignition": "^2.5",
-        "fakerphp/faker": "^1.9.1",
-        "krlove/eloquent-model-generator": "^1.3",
-        "laravel/breeze": "^1.4",
-        "laravel/sail": "^1.0.1",
-        "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^5.10",
-        "phpunit/phpunit": "^9.5.10"
+        "barryvdh/laravel-debugbar": "^v3.6.7",
+        "facade/ignition": "^2.17.5",
+        "fakerphp/faker": "^v1.19.0",
+        "krlove/eloquent-model-generator": "^1.3.8",
+        "laravel/breeze": "^v1.9.0",
+        "laravel/sail": "^v1.13.9",
+        "mockery/mockery": "^1.5.0",
+        "nunomaduro/collision": "^v5.11.0",
+        "phpunit/phpunit": "^9.5.20"
     },
     "autoload": {
         "psr-4": {
