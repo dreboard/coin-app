@@ -15,17 +15,14 @@ class UnbanUser
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public User $user;
-
     /**
      * Create a new event instance.
      *
      * @param User $user
      * @param int $length
      */
-    public function __construct(User $user)
+    public function __construct(public User $user)
     {
-        $this->user = $user;
     }
 
     /**

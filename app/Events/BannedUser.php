@@ -17,9 +17,6 @@ class BannedUser
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public int $length;
-
-    public User $user;
 
     /**
      * Create a new event instance.
@@ -27,11 +24,8 @@ class BannedUser
      * @param User|Collection|Model $user
      * @param int $length
      */
-    public function __construct(User|Collection|Model $user, int $length)
-    {
-        $this->user = $user;
-        $this->length = $length;
-    }
+    public function __construct(public User|Collection|Model $user, public int $length)
+    {}
 
     /**
      * Get the channels the event should broadcast on.

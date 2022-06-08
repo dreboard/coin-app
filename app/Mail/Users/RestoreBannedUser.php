@@ -12,16 +12,13 @@ class RestoreBannedUser extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private User $user;
-
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(private readonly User $user)
     {
-        $this->user = $user;
     }
 
     /**

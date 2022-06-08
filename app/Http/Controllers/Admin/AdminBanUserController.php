@@ -37,7 +37,6 @@ class AdminBanUserController
     public function viewAllBannedUsers()
     {
         $users = $this->userRepository->getAllBannedUsers();
-        //dd($users);
         return view('admin.user-all-banned', compact('users'));
 
     }
@@ -72,7 +71,7 @@ class AdminBanUserController
             event(new BannedUser($user, (int)$request->input('length')));
 
             return redirect()->action(
-                [AdminController::class, 'viewUser'],
+                [AdminUserActionsController::class, 'viewUser'],
                 ['user_id' => $request->input('user_id')]
             )->with('status', 'User is banned');
 
@@ -91,7 +90,7 @@ class AdminBanUserController
     {
         app(BanService::class)->deleteExpiredBans();
         return redirect()->action(
-            [AdminController::class, 'viewAllUsers']
+            [AdminUserActionsController::class, 'viewAllUsers']
         );
     }
 
@@ -105,7 +104,7 @@ class AdminBanUserController
             $user = User::find($user_id);
             event(new UnbanUser($user));
             return redirect()->action(
-                [AdminController::class, 'viewUser'],
+                [AdminUserActionsController::class, 'viewUser'],
                 ['user_id' => $user_id]
             )->with('success', 'User is activated');
 
