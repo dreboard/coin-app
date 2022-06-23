@@ -73,7 +73,7 @@ class AdminBanUserController
             return redirect()->action(
                 [AdminUserActionsController::class, 'viewUser'],
                 ['user_id' => $request->input('user_id')]
-            )->with('status', 'User is banned');
+            )->with('error', 'User is banned');
 
         } catch (\Exception $e) {
             Log::error($e->getMessage());

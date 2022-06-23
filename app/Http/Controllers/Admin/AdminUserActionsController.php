@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * AdminUserActionsController is a class for viewing and managing users *
+ * @package App\Http\Controllers\Admin
+ * @author Andre Board
+ * @version v1.0.0
+ * @since v0.0.1
+ * @see http://www.example.com/pear
+ */
 namespace App\Http\Controllers\Admin;
 
 use App\Interfaces\Users\InterfaceUserRepository;
@@ -17,16 +24,10 @@ class AdminUserActionsController
 
 
     /**
-     * @var InterfaceUserRepository
-     */
-    private InterfaceUserRepository $userRepository;
-
-    /**
      * @param InterfaceUserRepository $userRepository
      */
-    public function __construct(InterfaceUserRepository $userRepository)
+    public function __construct(private readonly InterfaceUserRepository $userRepository)
     {
-        $this->userRepository = $userRepository;
     }
 
     /**
@@ -35,7 +36,7 @@ class AdminUserActionsController
      * @param Request $request
      * @return Application|Factory|View
      */
-    public function findUser(Request $request)
+    public function findUser(Request $request): View|Factory|Application
     {
         $request->validate([
             'searchTerm' => 'required'
@@ -52,7 +53,7 @@ class AdminUserActionsController
      *
      * @return Application|Factory|View
      */
-    public function viewAllUsers()
+    public function viewAllUsers(): View|Factory|Application
     {
         $users = $this->userRepository->getAllUsers();
         return view('admin.user-all', compact('users'));
@@ -66,7 +67,7 @@ class AdminUserActionsController
      * @param int $user_id
      * @return Application|Factory|View
      */
-    public function viewUser(int $user_id)
+    public function viewUser(int $user_id): View|Factory|Application
     {
         $user = User::where('id', $user_id)->withCount('logins')->first();
         $last_login = UserLogin::where('user_id', $user_id)
@@ -83,7 +84,7 @@ class AdminUserActionsController
      * @param int $user_id
      * @return RedirectResponse
      */
-    public function deleteUser(int $user_id)
+    public function deleteUser(int $user_id): RedirectResponse
     {
         User::destroy($user_id);
         return redirect()->route('admin.view_users')->withInput()->withErrors(['User Deleted']);
@@ -94,9 +95,9 @@ class AdminUserActionsController
      * Clone a user
      *
      * @param int $user_id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function cloneUser(int $user_id)
+    public function cloneUser(int $user_id): RedirectResponse
     {
         $user = User::find($user_id);
         Auth::user()->impersonate($user);
@@ -108,9 +109,9 @@ class AdminUserActionsController
      *
      * @param int $user_id
      * @param int $status
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function changeUserStatus(int $user_id): \Illuminate\Http\RedirectResponse
+    public function changeUserStatus(int $user_id): RedirectResponse
     {
         $user = User::find($user_id);
         if ($user->account_status === 'Active') {
@@ -127,7 +128,7 @@ class AdminUserActionsController
 
         return redirect()->action(
             [AdminController::class, 'viewUser'], ['user_id' => $user_id]
-        );
+        )->$with([$msg]);
     }
 
 }

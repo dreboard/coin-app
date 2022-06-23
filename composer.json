@@ -1,7 +1,7 @@
 {
-    "name": "dreboard/example-app",
+    "name": "dreboard/coin-app",
     "type": "project",
-    "description": "The Basic Framework.",
+    "description": "Coin App",
     "keywords": ["framework", "dreboard"],
     "license": "MIT",
     "require": {

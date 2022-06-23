@@ -24,8 +24,9 @@ class RestoreBannedUser
     /**
      * Handle the event.
      *
-     * @param  \App\Events\UnbanUser  $event
+     * @param \App\Events\UnbanUser $event
      * @return void
+     * @throws Exception
      */
     public function handle(UnbanUser $event)
     {

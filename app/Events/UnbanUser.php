@@ -17,9 +17,6 @@ class UnbanUser
 
     /**
      * Create a new event instance.
-     *
-     * @param User $user
-     * @param int $length
      */
     public function __construct(public User $user)
     {

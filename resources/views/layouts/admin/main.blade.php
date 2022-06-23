@@ -31,6 +31,11 @@
                     </ul>
                 </div>
             @endif
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
                 @if (session('status'))
                     <div class="alert alert-info">
                         {{ session('status') }}
@@ -43,7 +48,7 @@
                         </ul>
                     </div>
                 @endif
-            <div id="app" class="container-fluid px-4">
+            <div id="app2" class="container-fluid px-4">
                 @stack('header')
                 @yield('content')
 
